@@ -1,3 +1,5 @@
+import os
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -10,6 +12,8 @@ from sklearn.utils import shuffle
 
 # Suponha que você tenha carregado suas imagens e rótulos aqui como X e y
 # Certifique-se de pré-processar seus dados antes disso, ajustando a escala de pixels para o intervalo [0,1]
+
+
 
 # Realizar data augmentation
 datagen = ImageDataGenerator(
