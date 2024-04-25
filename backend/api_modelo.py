@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Carregar o modelo treinado
-model_path = 'C:\\Users\\rdalm\\OneDrive\\Área de Trabalho\\esw-pin3-projeto\\esw-pin3-projeto\\modelo_2\\modelo\\modelo2.keras'
+model_path = os.getcwd() + '/modelo_1/modelo1.keras'
 print(model_path)
 model = load_model(model_path)
 
