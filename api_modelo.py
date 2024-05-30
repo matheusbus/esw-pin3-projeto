@@ -12,7 +12,7 @@ CORS(app)
 # Carregar o modelo treinado
 model_path = os.path.join(os.getcwd(), 'modelo_2', 'modelo', 'modelo2.keras')
 print(f"Loading model from: {model_path}")
-model = load_model(model_path)
+model2 = load_model(model_path)
 
 # Mapear as classes para rótulos legíveis pelo humano
 class_labels = {0: 'Morango', 1: 'Pêssego', 2: 'Romã'}
@@ -27,39 +27,46 @@ def preprocess_image(image_path, target_size=(300, 300)):
 def index():
     return render_template('index.html')
 
+@app.route('/modelo1')
+def modelo1():
+    return render_template('modelo1.html')
+
 @app.route('/modelo2')
 def modelo2():
     return render_template('modelo2.html')
+    
+@app.route('/predict2_batch', methods=['POST'])
+def predict_batch():
+    if 'images' not in request.files:
+        return jsonify({'error': 'No images uploaded'}), 400
+    
+    images = request.files.getlist('images')
+    predictions = {}
 
-@app.route('/predict2', methods=['POST'])
-def predict():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image uploaded'}), 400
-    
-    image_file = request.files['image']
-    
     try:
-        # Salvando a imagem temporariamente
-        image_path = os.path.join(os.getcwd(), 'temp_image.jpg')
-        image_file.save(image_path)
-        
-        # Pré-processamento da imagem
-        processed_image = preprocess_image(image_path)
-        
-        # Aplicando a predição
-        predictions = model.predict(processed_image)
-        predicted_class_index = np.argmax(predictions, axis=1)[0]
-        predicted_label = class_labels[predicted_class_index]
-        
-        print(f'Classificado como: {predicted_label}')
-        
-        # Removendo a imagem temporária
-        os.remove(image_path)
-        
-        return jsonify({'class': predicted_label})
+        for image in images:
+            # Salvando a imagem temporariamente
+            image_path = os.path.join(os.getcwd(), 'temp_image.jpg')
+            image.save(image_path)
+            
+            # Pré-processamento da imagem
+            processed_image = preprocess_image(image_path)
+            
+            # Aplicando a predição
+            prediction = model2.predict(processed_image)
+            predicted_class_index = np.argmax(prediction, axis=1)[0]
+            predicted_label = class_labels[predicted_class_index]
+            
+            # Adicionando o resultado à lista de previsões
+            predictions[image.filename] = predicted_label
+            
+            # Removendo a imagem temporária
+            os.remove(image_path)
+
+        return jsonify(predictions)
     except Exception as e:
-        print(f"Error processing the image: {e}")
-        return jsonify({'error': 'Error processing the image'}), 500
+        print(f"Error processing the images: {e}")
+        return jsonify({'error': 'Error processing the images'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

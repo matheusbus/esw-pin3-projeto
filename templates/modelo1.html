@@ -20,7 +20,7 @@
                 formData.append('images', file);
             }
             
-            fetch('http://127.0.0.1:5000/predict2_batch', {
+            fetch('http://127.0.0.1:5000/predict1', {
                 method: 'POST',
                 body: formData
             })
