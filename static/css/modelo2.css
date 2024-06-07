@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0f7fa; /* Cor de fundo azul claro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Alterado de center para flex-start */
+    height: 100vh;
+    padding-top: 50px; /* Aumentando o padding-top do corpo */
+}
+
+.top-bar {
+    background-color: white;
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Garante que ocupe a largura total */
+    position: fixed; /* Fixa no topo */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Garante que fique acima de outros conteúdos */
+}
+
+h1 {
+    color: #64b5f6;  /* Azul claro */
+    font-size: 20px;
+    margin: 0; /* Removido margem extra */
+}
+
+/* Estilos adicionais para input e botões como antes */
+input[type="file"] {
+    margin-top: 20px; /* Adicionado margem no topo para separar da barra */
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    margin-top: 100px; /* Aumentando ainda mais a margem superior */
+}
+
+input[type="file"], button {
+    margin-top: 0; /* Assegura que não haja margem extra no topo dos elementos */
+}
+
+input[type="file"] {
+    margin: 0 10px 0 0; 
+    cursor: pointer;
+}
+
+button {
+    margin: 0; 
+}
+
+#results {
+    width: 80%;
+    margin-top: 50px; /* Aumentando a margem superior para movê-la para baixo */
+    padding: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: white;
+}

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classificação de Frutas por Espécie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Classificação de Frutas por Espécie</h1>
+    <div class="top-bar">
+        <h1>Classificação de Frutas por Espécie</h1>
+    </div>
+    <div class="main-content">
+        <!-- Botão para a rota 1 -->
+        <button onclick="location.href='/modelo1'">Modelo 1</button>
 
-    <!-- Botão para a rota 1 -->
-    <button onclick="location.href='/modelo1'">Modelo 1</button>
-
-    <!-- Botão para a rota 2 -->
-    <button onclick="location.href='/modelo2'">Modelo 2</button>
+        <!-- Botão para a rota 2 -->
+        <button onclick="location.href='/modelo2'">Modelo 2</button>
+    </div>
 </body>
 </html>

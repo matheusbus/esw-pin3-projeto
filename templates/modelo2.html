@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classificação de Imagens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modelo2.css') }}">
 </head>
 <body>
-    <input type="file" name="Imagem" id="imageUpload" accept="image/*" multiple>
-    <button onclick="classifyImages()">Classificar</button>
+    <div class="top-bar">
+        <h1>Modelo 2</h1>
+    </div>
+    <div class="form-container"> <!-- Contêiner para o formulário -->
+        <input type="file" name="Imagem" id="imageUpload" accept="image/*" multiple>
+        <button onclick="classifyImages()">Classificar</button>
+    </div>
     <div id="results"></div>
-
     <script>
         function classifyImages() {
             const fileInput = document.getElementById('imageUpload');
@@ -30,9 +35,20 @@
                 resultsDiv.innerHTML = '';
 
                 for (const [imageName, prediction] of Object.entries(data)) {
-                    const resultElement = document.createElement('div');
-                    resultElement.innerText = `${imageName}: Classificado como ${prediction}`;
-                    resultsDiv.appendChild(resultElement);
+                    // Criar um elemento de imagem
+                    const imageElement = document.createElement('img');
+                    imageElement.src = `/templates/${imageName}`; 
+                    
+                    const classificationElement = document.createElement('p');
+                    classificationElement.innerText = `Classificado como ${prediction}`;
+
+                    // Criar um contêiner para a imagem e a classificação
+                    const containerElement = document.createElement('div');
+                    containerElement.appendChild(imageElement);
+                    containerElement.appendChild(classificationElement);
+
+                    // Adicionar o contêiner de imagem e classificação ao resultado
+                    resultsDiv.appendChild(containerElement);
                 }
             })
             .catch(error => {
