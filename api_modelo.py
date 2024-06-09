@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for
 from tensorflow.keras.models import load_model
 from flask_cors import CORS
 from PIL import Image
@@ -8,6 +8,12 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+
+# Definir o diretório de upload
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Carregar o modelo treinado
 model_path = os.path.join(os.getcwd(), 'modelo_2', 'modelo', 'modelo2.keras')
@@ -45,8 +51,8 @@ def predict_batch():
 
     try:
         for image in images:
-            # Salvando a imagem temporariamente
-            image_path = os.path.join(os.getcwd(), 'temp_image.jpg')
+            # Salvando a imagem no diretório de upload
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
             image.save(image_path)
             
             # Pré-processamento da imagem
@@ -59,9 +65,6 @@ def predict_batch():
             
             # Adicionando o resultado à lista de previsões
             predictions[image.filename] = predicted_label
-            
-            # Removendo a imagem temporária
-            os.remove(image_path)
 
         return jsonify(predictions)
     except Exception as e:

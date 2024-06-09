@@ -14,7 +14,7 @@
         <input type="file" name="Imagem" id="imageUpload" accept="image/*" multiple>
         <button onclick="classifyImages()">Classificar</button>
     </div>
-    <div id="results"></div>
+    <div id="results" class="results-container"></div>
     <script>
         function classifyImages() {
             const fileInput = document.getElementById('imageUpload');
@@ -25,7 +25,7 @@
                 formData.append('images', file);
             }
             
-            fetch('http://127.0.0.1:5000/predict2_batch', {
+            fetch('/predict2_batch', {
                 method: 'POST',
                 body: formData
             })
@@ -37,13 +37,16 @@
                 for (const [imageName, prediction] of Object.entries(data)) {
                     // Criar um elemento de imagem
                     const imageElement = document.createElement('img');
-                    imageElement.src = `/templates/${imageName}`; 
+                    imageElement.src = `/static/uploads/${imageName}`; 
+                    imageElement.classList.add('result-image');
                     
                     const classificationElement = document.createElement('p');
                     classificationElement.innerText = `Classificado como ${prediction}`;
+                    classificationElement.classList.add('result-text');
 
                     // Criar um contêiner para a imagem e a classificação
                     const containerElement = document.createElement('div');
+                    containerElement.classList.add('result-item');
                     containerElement.appendChild(imageElement);
                     containerElement.appendChild(classificationElement);
 
